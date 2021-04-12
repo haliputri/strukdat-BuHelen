@@ -8,4 +8,4 @@ Tugas Strukdat
 # Nama - Tugas
 1. Hali
 2. Nawang
-3. Nabila 
+3. Nabil
