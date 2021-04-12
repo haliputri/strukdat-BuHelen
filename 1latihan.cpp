@@ -2,6 +2,10 @@
 
 using namespace std;
 
+/*
+aku mau coba push dulu ya
+*/
+
 struct Mahasiswa {
     char NPM[14];
     char nama[30];
