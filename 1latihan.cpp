@@ -6,6 +6,8 @@ using namespace std;
 aku mau coba push dulu ya
 */
 // halo hali
+// hm bgt
+
 struct Mahasiswa {
     char NPM[14];
     char nama[30];
