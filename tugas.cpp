@@ -13,13 +13,13 @@ Melengkapi Function Multi Linked List
 
 struct Anak {
     char dataAnak;
-    Anak * next;
+    Anak * nextAnak;
 };
 
 struct Pegawai {
     char dataPeg;
     Anak* firstAnak;
-    Pegawai* next;
+    Pegawai* nextPeg;
 };
 
 typedef Anak* pointerAnak;
@@ -29,21 +29,20 @@ typedef pointerPeg ListPeg;
 
 // Parent LinkedList
 void createListPeg(ListPeg& First){
-    First = new Pegawai;
-    First->next = nullptr;
-    First->firstAnak = nullptr;
+    First = nullptr;
 }
 
 // ElementParent yg punya anak
 void createElementPeg(pointerPeg& pBaru){
     pBaru = new Pegawai;
-    pBaru->firstAnak->next = nullptr;
+    pBaru->nextPeg = nullptr;
+    pBaru->firstAnak = nullptr;
 }
 
 // Bikin Element Anak
 void createElementAnak(pointerAnak& pBaru){
     pBaru = new Anak;
-    pBaru->next = nullptr;
+    pBaru->nextAnak = nullptr;
 }
 
 // Mengakses List Pegawai (Parent)
@@ -51,7 +50,7 @@ void traversalPeg(ListPeg First){
     pointerPeg pHelp = First;
     while (pHelp != nullptr){
         std::cout << pHelp->dataPeg << " " << std::endl;
-        pHelp = pHelp->next;
+        pHelp = pHelp->nextPeg;
     }
     std::cout<<std::endl;
 }
@@ -72,15 +71,14 @@ void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
     // linearSearch(First,key,ketemu,pOrtu);
     pOrtu = First;
     ketemu = 0;
-    while (pOrtu !=NULL && ketemu==0) { //!ketemu
+    while (pOrtu != nullptr && ketemu==0) { //!ketemu
         if (pOrtu->dataPeg==key){
             ketemu=1;
         }
         else{
-            pOrtu=pOrtu->next;
+            pOrtu=pOrtu->nextPeg;
         }
     }
-
     
     if (ketemu){ // (ketemu==1)
         std::cout<<"Ditemukan"<< std::endl;
@@ -88,7 +86,7 @@ void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
             pOrtu->firstAnak = pBaru;
         }
         else {
-            pBaru->next = pOrtu->firstAnak;
+            pBaru->nextAnak = pOrtu->firstAnak;
             pOrtu->firstAnak = pBaru;
         }
     }
@@ -96,9 +94,56 @@ void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
         std::cout<< "Tidak ditemukan" << std::endl;
     }
 }
-void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
-    
-}
-void traversalOrtuAnak(ListPeg First){
 
+void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
+    // I.S List First mungkin kosong
+    // F.S. List anak berkurang didepan, yg dihapus dikembalikan
+    pointerPeg pOrtu;
+    int ketemu;
+    std::cout <<"Delete First Anak"<< std::endl;
+    pOrtu=First;
+    ketemu=0;
+    while (pOrtu != nullptr && ketemu==0) {
+        if (pOrtu->dataPeg==key){
+            ketemu=1;
+        }
+        else{
+            pOrtu=pOrtu->nextPeg;
+        }
+    }
+    if (ketemu) {
+        if (pOrtu->firstAnak == nullptr){ // kosong
+        pHapus=NULL;
+        std::cout<<"List kosong, tidak ada hapus"<< std::endl;
+        }
+        else if (pOrtu->firstAnak->nextAnak== nullptr){
+        //isi 1 elemen
+            pHapus=pOrtu->firstAnak;
+            pOrtu->firstAnak = nullptr;
+        }
+        else { // isi > 1 elemen
+            pHapus = pOrtu->firstAnak;
+            pOrtu->firstAnak = pOrtu->firstAnak->nextAnak;
+            pHapus->nextAnak= nullptr;
+        }
+    }
+    else{
+    std::cout<<"Tidak ditemukan"<<std::endl;
+    }
+}
+
+void traversalOrtuAnak(ListPeg First){
+    pointerPeg pBantuPeg;
+    pointerAnak pBantuAnak;
+    std::cout<<"Traversal Pegawai"<<std::endl;
+    pBantuPeg=First;
+    while (pBantuPeg!=NULL){ //loop ortu
+        std::cout<< pBantuPeg->dataPeg <<std::endl;
+        pBantuAnak=pBantuPeg->firstAnak;
+        while (pBantuAnak!=NULL) { //loop anak
+            std::cout<<" "<<pBantuAnak->dataAnak <<std::endl;
+            pBantuAnak=pBantuAnak->nextAnak;
+        }
+        pBantuPeg=pBantuPeg->nextPeg;
+    }
 }
