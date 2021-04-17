@@ -7,6 +7,7 @@ aku mau coba push dulu ya
 */
 // halo hali
 // hm bgt
+// halo guys ini nabil
 
 struct Mahasiswa {
     char NPM[14];
