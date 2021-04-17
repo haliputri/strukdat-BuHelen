@@ -72,7 +72,15 @@ void insertFirstPeg(ListPeg& First, pointerPeg pBaru){
 
 }
 void deleteFirstPeg(ListPeg& First, pointerPeg& pHapus){
-
+    if (First == nullptr){
+        pHapus = nullptr;
+        std::cout << "List Kosong" << '\n';
+    } else {
+        pHapus =First;
+        First = First->nextPeg;
+        pHapus->nextPeg = nullptr;
+    }
+    delete(pHapus);
 }
 
 void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
