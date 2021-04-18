@@ -72,7 +72,7 @@ void linearSearch(ListPeg First, std::string& key, pointerPeg& pCari){
     int ketemu;
     ketemu = 0;
 
-    while (pCari->firstAnak == nullptr && ketemu == 0){
+    while (pCari != nullptr && ketemu == 0){
         if (pCari->dataPeg == key){
             ketemu = 1;
         } else{
