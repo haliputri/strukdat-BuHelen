@@ -72,16 +72,22 @@ void linearSearch(ListPeg First, char key, int& status, pointerPeg& pCari){
 
     while (pCari->dataAnak == nullptr && ketemu == 0){
         if (pCari->dataPeg == key) ketemu = 1;
-        else pCari = pCari->next;
+        else pCari = pCari->nextPeg;
     }
     if (ketemu = 1){
-        cout << "data ditemukan";
+        std::cout << "data ditemukan";
     } else {
-        cout << "data tidak ditemukan";
+        std::cout << "data tidak ditemukan";
     }
 }
 void insertFirstPeg(ListPeg& First, pointerPeg pBaru){
-
+if (First==NULL) 
+		First=pBaru;
+	else { 
+		pBaru->nextPeg=First;
+		First=pBaru;
+	}
+	std::cout<<"Data berhasil dimasukkan."<<'\n';
 }
 void deleteFirstPeg(ListPeg& First, pointerPeg& pHapus){
     if (First == nullptr){
