@@ -79,7 +79,7 @@ void linearSearch(ListPeg First, std::string& key, pointerPeg& pCari){
             pCari = pCari->nextPeg;
         }
     }
-    if (ketemu = 1){
+    if (ketemu == 1){
         std::cout << "data ditemukan";
     } else {
         std::cout << "data tidak ditemukan";
