@@ -87,14 +87,15 @@ void linearSearch(ListPeg First, std::string& key, pointerPeg& pCari){
 }
 
 void insertFirstPeg(ListPeg& First, pointerPeg pBaru){
-if (First==NULL) 
-		First=pBaru;
-	else { 
+if (First== nullptr) {
+		First=pBaru; 
+        } else { 
 		pBaru->nextPeg=First;
 		First=pBaru;
 	}
-	std::cout<<"Data berhasil dimasukkan."<<'\n';
+	std::cout<<"Data berhasil dimasukkan"<<'\n';
 }
+
 void deleteFirstPeg(ListPeg& First, pointerPeg& pHapus){
     if (First == nullptr){
         pHapus = nullptr;
