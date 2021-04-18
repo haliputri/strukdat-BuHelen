@@ -12,12 +12,12 @@ Melengkapi Function Multi Linked List
 #include <iostream>
 
 struct Anak {
-    char dataAnak;
+    int dataAnak;
     Anak * nextAnak;
 };
 
 struct Pegawai {
-    char dataPeg;
+    std::string dataPeg;
     Anak* firstAnak;
     Pegawai* nextPeg;
 };
@@ -35,6 +35,7 @@ void createListPeg(ListPeg& First){
 // ElementParent yg punya anak
 void createElementPeg(pointerPeg& pBaru){
     pBaru = new Pegawai;
+    std::cout<<"Masukkan Divisi Pegawai : " ; std::cin>>pBaru->dataPeg;
     pBaru->nextPeg = nullptr;
     pBaru->firstAnak = nullptr;
 }
@@ -42,15 +43,16 @@ void createElementPeg(pointerPeg& pBaru){
 // Bikin Element Anak
 void createElementAnak(pointerAnak& pBaru){
     pBaru = new Anak;
+    std::cout<<"Masukkan ID Anggota : " ; std::cin>>pBaru->dataAnak;
     pBaru->nextAnak = nullptr;
 }
 
 // Mengakses List Pegawai (Parent)
 void traversalPeg(ListPeg First){
     pointerPeg pBantu;
-	std::cout<<"\nData Pegawai"<<std::endl<<std::endl;
+	std::cout<<"\nData Divisi Pegawai"<<std::endl<<std::endl;
 	std::cout<<"----------------------------------"<<std::endl;
-	std::cout<<"No.\tNama Pegawai"<<std::endl;
+	std::cout<<"No.\tNama Divisi Pegawai"<<std::endl;
 	std::cout<<"-----------------------------------"<<std::endl;
 	if (First == nullptr){
 		std::cout<<"Tidak Terdapat Pegawai"<<std::endl;
@@ -65,14 +67,17 @@ void traversalPeg(ListPeg First){
 	}
 }
 //koreksi guys kalo ada salah :)
-void linearSearch(ListPeg First, char key, int& status, pointerPeg& pCari){
+void linearSearch(ListPeg First, std::string& key, pointerPeg& pCari){
     pCari = First;
     int ketemu;
     ketemu = 0;
 
-    while (pCari->dataAnak == nullptr && ketemu == 0){
-        if (pCari->dataPeg == key) ketemu = 1;
-        else pCari = pCari->nextPeg;
+    while (pCari->firstAnak == nullptr && ketemu == 0){
+        if (pCari->dataPeg == key){
+            ketemu = 1;
+        } else{
+            pCari = pCari->nextPeg;
+        }
     }
     if (ketemu = 1){
         std::cout << "data ditemukan";
@@ -80,6 +85,7 @@ void linearSearch(ListPeg First, char key, int& status, pointerPeg& pCari){
         std::cout << "data tidak ditemukan";
     }
 }
+
 void insertFirstPeg(ListPeg& First, pointerPeg pBaru){
 if (First==NULL) 
 		First=pBaru;
@@ -101,14 +107,17 @@ void deleteFirstPeg(ListPeg& First, pointerPeg& pHapus){
     delete(pHapus);
 }
 
-void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
+void insertFirstAnak(ListPeg& First, std::string key,pointerAnak pBaru){
     // I.S List First mungkin kosong dan pBaru sudah terdefinisi
     // F.S Elemen anak bertambah satu elemen di depan
-    pointerPeg pOrtu;
+    pointerPeg pOrtu, pCari;
     int ketemu;
-    std::cout<<"Insert First Anak"<<std::endl;
-    
-    // linearSearch(First,key,ketemu,pOrtu);
+    int id;
+
+    // linearSearch(First,key,pCari);
+    std::cout << "masukan data divisi pegawai yang akan dicari: "; // ini nabil yang nambah, koreksi aja kalau salah
+    std::cin >> key; //ini nabil yang nambah
+    linearSearch(First, key, pCari);
     pOrtu = First;
     ketemu = 0;
     while (pOrtu != nullptr && ketemu==0) { //!ketemu
@@ -121,7 +130,6 @@ void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
     }
     
     if (ketemu){ // (ketemu==1)
-        std::cout<<"Ditemukan"<< std::endl;
         if (pOrtu->firstAnak == nullptr){
             pOrtu->firstAnak = pBaru;
         }
@@ -130,12 +138,9 @@ void insertFirstAnak(ListPeg& First, char key,pointerAnak pBaru){
             pOrtu->firstAnak = pBaru;
         }
     }
-    else{
-        std::cout<< "Tidak ditemukan" << std::endl;
-    }
 }
 
-void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
+void deleteFirstAnak(ListPeg& First, std::string key,pointerAnak& pHapus){
     // I.S List First mungkin kosong
     // F.S. List anak berkurang didepan, yg dihapus dikembalikan
     pointerPeg pOrtu;
@@ -144,7 +149,7 @@ void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
     pOrtu=First;
     ketemu=0;
     while (pOrtu != nullptr && ketemu==0) {
-        if (pOrtu->dataPeg==key){
+        if (pOrtu->dataPeg == key){
             ketemu=1;
         }
         else{
@@ -153,7 +158,7 @@ void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
     }
     if (ketemu) {
         if (pOrtu->firstAnak == nullptr){ // kosong
-        pHapus=NULL;
+        pHapus= nullptr;
         std::cout<<"List kosong, tidak ada hapus"<< std::endl;
         }
         else if (pOrtu->firstAnak->nextAnak== nullptr){
@@ -175,7 +180,8 @@ void deleteFirstAnak(ListPeg& First, char key,pointerAnak& pHapus){
 void traversalOrtuAnak(ListPeg First){
     pointerPeg pBantuPeg;
     pointerAnak pBantuAnak;
-    std::cout<<"Traversal Pegawai"<<std::endl;
+    std::cout<<"\nData Divisi Pegawai dan Anggota"<<std::endl<<std::endl;
+	std::cout<<"----------------------------------"<<std::endl;
     pBantuPeg=First;
     while (pBantuPeg!= nullptr){ //loop ortu
         std::cout<< pBantuPeg->dataPeg <<std::endl;
@@ -192,8 +198,9 @@ int main(){
     pointerPeg peg;
 	pointerAnak anak;
 	ListPeg head;
-	char data;
-	int cari;
+	std::string data;
+	std::string cari;
+    int id;
 	
 	createListPeg(head);
 	int pilih;
@@ -202,13 +209,13 @@ int main(){
 		std::cout<<"================================================="<<'\n';
 		std::cout<<"  Daftar Divisi dan Karyawan PT Informatika Unpad "<<'\n';
 		std::cout<<"================================================="<<'\n';
-	 	std::cout<<"1. Insert First Pegawai             "<<'\n';
+	 	std::cout<<"1. Insert First Divisi Pegawai      "<<'\n';
 		std::cout<<"2. Insert First Anggota             "<<'\n';
-		std::cout<<"3. Delete First Pegawai             "<<'\n';
+		std::cout<<"3. Delete First Divisi Pegawai      "<<'\n';
 		std::cout<<"4. Delete First Anggota             "<<'\n';
-		std::cout<<"5. Cetak Data Pegawai               "<<'\n';
-		std::cout<<"6. Cetak Data Pegawai dan Anggota   "<<'\n';
-		std::cout<<"7. Cari Data Anggota                "<<'\n';
+		std::cout<<"5. Cetak Data Divisi Pegawai        "<<'\n';
+		std::cout<<"6. Cetak Data Divisi dan Anggota    "<<'\n';
+        std::cout<<"7. Mencari Divisi                   "<<'\n';
 		std::cout<<"8. Keluar                           "<<'\n';
 		std::cout<<"================================================="<<'\n';
 		
@@ -217,15 +224,11 @@ int main(){
 		
 		switch(pilih){
 		case 1:
-			system("cls");
 			createElementPeg(peg);
 			insertFirstPeg(head, peg);
 			std::cout <<"\nDivisi baru berhasil ditambah." <<'\n';
 			break;
 		case 2:
-			system("cls");
-			std::cout<<"Masukkan divisi: "; 
-			std::cin>>data;
 			createElementAnak(anak);
 			insertFirstAnak(head, data, anak);
 			std::cout<<"\nAnggota baru berhasil ditambah."<<'\n';
@@ -234,9 +237,8 @@ int main(){
 			deleteFirstPeg(head, peg);
 			std::cout<< "\nDivisi terakhir berhasil dihapus."<<'\n';
 			break;
-		
 		case 4:
-			std::cout << "Masukkan divisi: "; 
+			std::cout << "masukan data divisi pegawai yang akan dicari: ";
 			std::cin >> cari;
 			deleteFirstAnak(head, data, anak);
 			std::cout << "\nAnggota pertama berhasil dihapus." <<'\n';
@@ -247,15 +249,13 @@ int main(){
 			traversalOrtuAnak(head);
 			break;
 		case 7:
-			system("cls");
-            std::cout << "masukan data pegawai yang akan dicari: "; //ini nabil yang nambah, koreksi aja kalau salah
-            std::cin >> data; //ini nabil yang nambah
-			linearSearch(head, data, cari, peg);
+            std::cout << "masukan data divisi pegawai yang akan dicari: "; // ini nabil yang nambah, koreksi aja kalau salah
+            std::cin >> cari; //ini nabil yang nambah
+			linearSearch(head, cari, peg);
 			break;	
 		}
 		std::cout<<std::endl;
 		system("pause");
-		system("cls");
 	}
 	while(pilih!=8);
 }
