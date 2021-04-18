@@ -64,9 +64,21 @@ void traversalPeg(ListPeg First){
 		}
 	}
 }
-
+//koreksi guys kalo ada salah :)
 void linearSearch(ListPeg First, char key, int& status, pointerPeg& pCari){
-    
+    pCari = First;
+    int ketemu;
+    ketemu = 0;
+
+    while (pCari->dataAnak == nullptr && ketemu == 0){
+        if (pCari->dataPeg == key) ketemu = 1;
+        else pCari = pCari->next;
+    }
+    if (ketemu = 1){
+        cout << "data ditemukan";
+    } else {
+        cout << "data tidak ditemukan";
+    }
 }
 void insertFirstPeg(ListPeg& First, pointerPeg pBaru){
 
@@ -76,7 +88,7 @@ void deleteFirstPeg(ListPeg& First, pointerPeg& pHapus){
         pHapus = nullptr;
         std::cout << "List Kosong" << '\n';
     } else {
-        pHapus =First;
+        pHapus = First;
         First = First->nextPeg;
         pHapus->nextPeg = nullptr;
     }
@@ -230,6 +242,8 @@ int main(){
 			break;
 		case 7:
 			system("cls");
+            std::cout << "masukan data pegawai yang akan dicari: "; //ini nabil yang nambah, koreksi aja kalau salah
+            std::cin >> data; //ini nabil yang nambah
 			linearSearch(head, data, cari, peg);
 			break;	
 		}
